@@ -258,6 +258,20 @@ $get_params = http_build_query($get_params);
 	    height: 100%;
 	}
 	</style><![endif]-->
+	<script>
+		//fix 'Object.defineProperty()' problem in ZeroClipboard library in IE8.
+		function definePropertyWorks() {
+			try {
+				return 'xx' in Object.defineProperty({}, 'xx', {});
+			} catch (e) { /* return falsey */ }
+		}
+		if (!definePropertyWorks()){
+			defineProperty = function(obj, prop, descriptor) {
+				obj[prop] = descriptor.value;
+			};
+			window.Object.defineProperty = defineProperty;
+		}
+	</script>
 	<script src="js/plugins.js"></script>
 	<script src="js/jPlayer/jquery.jplayer/jquery.jplayer.js"></script>
 	<script src="js/modernizr.custom.js"></script>
